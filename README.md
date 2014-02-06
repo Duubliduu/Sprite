@@ -1,4 +1,4 @@
-sprite
+Sprite
 ======
 
 Sprite object for canvas
