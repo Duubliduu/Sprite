@@ -1,11 +1,15 @@
-var Sprite = function ( settings ) {
+/*global window, document, Image, console*/
+
+var Sprite = function (settings) {
+    
+    'use strict';
 
 	this.settings = {
 		image: null,
 		fps: 30,
 		width: 512,
 		height: 512,
-		frames: [],
+		frames: []
 	};
 
 	// Extend settings
@@ -37,7 +41,8 @@ var Sprite = function ( settings ) {
  * Extend object
  * Usage Sprite.extend({}, objA, objB);
  */
-Sprite.prototype.extend = function(out) {
+Sprite.prototype.extend = function (out) {
+    
 	out = out || {};
 	for (var i = 1; i < arguments.length; i++) {
 		if (!arguments[i]) {
@@ -94,66 +99,3 @@ Sprite.prototype.drawFrame = function () {
 	return this.canvas;
 
 }
-
-
-
-/**
- * Shim layer with setTimeout fallback
- */
-window.requestAnimFrame = (function(){
-  return  window.requestAnimationFrame       ||
-          window.webkitRequestAnimationFrame ||
-          window.mozRequestAnimationFrame    ||
-          function( callback ){
-            window.setTimeout(callback, 1000 / 60);
-          };
-})();
-
-
-
-// Our "game canvas"
-var canvas = document.getElementById('canvas');
-var ctx = canvas.getContext('2d');
-
-
-// Preload the sprite image
-var sprite_image = new Image();
-sprite_image.onload = function() {
-
-
-	// Create a new Sprite object
-	var sprite = new Sprite({
-		'image': this,
-		'fps': 5,
-		'width': 108,
-		'height': 169,
-		'frames': [
-
-			// Hätäset freimit
-			{ x: 0, y: 0 },
-			{ x: 108, y: 0 },
-			{ x: 216, y: 0 },
-			{ x: 324, y: 0 },
-			{ x: 432, y: 0 },
-		]
-
-	});
-
-	// Animate
-	(function animloop(){
-
-	 	requestAnimFrame(animloop);
-	 	ctx.clearRect(0, 0, 108, 169);
-	 	ctx.drawImage(sprite.getFrame(), 0, 0);
-
-	})();
-
-};
-
-sprite_image.src = 'mario.png';
-
-
-
-
-
-
